@@ -1,0 +1,11 @@
+{
+  "name": "@akamas/rollup-plugin",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": "./mod.ts",
+  "imports": {
+    "@rollup/pluginutils": "npm:@rollup/pluginutils@^5.2.0",
+    "rollup": "npm:rollup@^4.46.1",
+    "typescript": "npm:typescript@^5.8.3"
+  }
+}

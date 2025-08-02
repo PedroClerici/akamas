@@ -1,0 +1,12 @@
+{
+  "workspace": [
+    "./packages/akamas",
+    "./packages/typescript-transformer",
+    "./packages/rollup-plugin"
+  ],
+  "imports": {
+    "@biomejs/biome": "npm:@biomejs/biome@^2.1.2",
+    "@std/assert": "jsr:@std/assert@1"
+  },
+  "nodeModulesDir": "auto"
+}

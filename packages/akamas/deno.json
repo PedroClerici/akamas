@@ -1,0 +1,11 @@
+{
+  "name": "@akamas/akamas",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": "./src/mod.ts",
+  "imports": {
+    "@std/expect": "jsr:@std/expect@^1.0.16",
+    "@std/testing": "jsr:@std/testing@^1.0.15",
+    "esm-env": "npm:esm-env@^1.2.2"
+  }
+}

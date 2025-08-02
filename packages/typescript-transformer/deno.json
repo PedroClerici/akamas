@@ -1,0 +1,10 @@
+{
+  "name": "@akamas/typescript-transformer",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": "./src/mod.ts",
+  "imports": {
+    "@/": "./src/",
+    "typescript": "npm:typescript@^5.8.3"
+  }
+}
