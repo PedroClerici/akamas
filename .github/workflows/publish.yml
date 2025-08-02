@@ -22,4 +22,4 @@ jobs:
           deno-version: vx.x.x
 
       - name: Publish packages
-        run: deno publish
+        run: deno publish --allow-slow-types
