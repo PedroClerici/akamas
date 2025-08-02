@@ -22,9 +22,11 @@ export function expose<T extends Exposeable>(
   shouldSetup: boolean = true,
 ): T {
   if (shouldSetup) {
+    // @ts-ignore: TODO: Add `message` event type to `globalThis`.
     globalThis.addEventListener('message', async ({ data }) => {
       const { key, value, id } = data;
       const result = await fields[key](...value);
+      // @ts-ignore: TODO: Type `postMessage` for the `globalThis`.
       globalThis.postMessage({ id, result });
     });
   }
