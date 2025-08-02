@@ -3,5 +3,10 @@
   "imports": {
     "@biomejs/biome": "npm:@biomejs/biome@^2.1.2"
   },
+  "lint": {
+    "rules": {
+      "exclude": ["no-explicit-any"]
+    }
+  },
   "nodeModulesDir": "auto"
 }
