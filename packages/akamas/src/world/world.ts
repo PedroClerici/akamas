@@ -8,7 +8,7 @@ import type { Schedule, ScheduleType } from './schedule.ts';
 import type { WorldEventListeners } from './world-event-listeners.ts';
 
 /**
- * The entry point for a Thyseus application.
+ * The entry point for a Akamas application.
  *
  * Contains data and types used by the app, such as entities, components, resources, and systems.
  */
@@ -134,6 +134,25 @@ export class World {
   }
 
   /**
+   * Ensures that given schedule has been created.
+   * This is technically optional; Akamas will auto-init the schedule the first time it is used.
+   * @param `resource` The resource object to be initialized.
+   * @returns `this`, for chaining.
+   */
+  initSchedule(scheduleType: ScheduleType): this {
+    devAssert(
+      !this.schedules.has(scheduleType),
+      `The schedule "${String(scheduleType.name)}" has already been initialized!`,
+    );
+
+    if (!this.schedules.has(scheduleType)) {
+      this.schedules.set(scheduleType, new scheduleType(this));
+    }
+
+    return this
+  }
+
+  /**
    * Spawns a new entity in the world (alias for `world.entities.spawn()`).
    * @returns The newly created `Entity`
    */
@@ -152,18 +171,23 @@ export class World {
     let res = this.resources.find((r) => r.constructor === resourceType) as
       | InstanceType<T>
       | undefined;
+
     if (res) {
       return res;
     }
+
     res =
       'fromWorld' in resourceType
         ? await (resourceType as any).fromWorld(this)
         : new resourceType();
+
     devAssert(
       res !== undefined,
       `${resourceType.name}.fromWorld() returned undefined; expected an object.`,
     );
+
     this.resources.push(res);
+
     return res;
   }
 
@@ -183,6 +207,32 @@ export class World {
       this.resources[resourceIndex] = resource;
     }
     return this;
+  }
+
+  /**
+   * Initializes the resource of the provided type.
+   * This is technically optional; Akamas will auto-init the resource the first time it is used.
+   * @param `resource` The resource object to be initialized.
+   * @returns `this`, for chaining.
+   */
+  initResource<T extends Class>(resourceType: T): this {
+    let res = this.resources.find((r) => r.constructor === resourceType) as
+      | InstanceType<T>
+      | undefined;
+
+    res =
+      'fromWorld' in resourceType
+        ? (resourceType as any).fromWorld(this)
+        : new resourceType();
+
+    devAssert(
+      res !== undefined,
+      `${resourceType.name}.fromWorld() returned undefined; expected an object.`,
+    );
+
+    this.resources.push(res);
+
+    return this
   }
 
   /**

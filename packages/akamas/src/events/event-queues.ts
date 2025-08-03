@@ -15,7 +15,7 @@ export class EventReader<T extends object> {
   }
 
   public readonly type: Class;
-  private queue: T[];
+  protected queue: T[];
 
   constructor(type: { new (...args: any[]): T }, queue: T[]) {
     this.type = type;
@@ -44,11 +44,10 @@ export class EventWriter<T extends object> extends EventReader<T> {
   ): Promise<EventWriter<any>> {
     return (await world.getResource(Events)).getWriter(eventType);
   }
-  #queue: T[];
 
   constructor(type: { new (...args: any[]): T }, queue: T[]) {
     super(type, queue);
-    this.#queue = queue;
+    this.queue = queue;
   }
 
   /**
@@ -57,7 +56,7 @@ export class EventWriter<T extends object> extends EventReader<T> {
    * @returns `this`, for chaining.
    */
   create(instance: T): this {
-    this.#queue.push(instance);
+    this.queue.push(instance);
     return this;
   }
 
@@ -65,6 +64,6 @@ export class EventWriter<T extends object> extends EventReader<T> {
    * Immediately clears all events in this queue.
    */
   clear(): void {
-    this.#queue.length = 0;
+    this.queue.length = 0;
   }
 }

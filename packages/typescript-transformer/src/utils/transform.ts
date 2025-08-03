@@ -63,7 +63,7 @@ export function getParentDeclaration(
     : undefined;
 }
 
-const IGNORE_TEXT = 'thyseus-ignore';
+const IGNORE_TEXT = 'akamas-ignore';
 
 export function shouldIgnoreNode(node: ts.Node): boolean {
   if (ts.isSourceFile(node)) {
